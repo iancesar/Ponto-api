@@ -25,6 +25,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author ian
@@ -73,9 +75,11 @@ public class Usuario implements Serializable
 	private Date					saldoInicial;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+	//@JsonIgnore
 	private List<Expediente>	expedienteList;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+	@JsonIgnore
 	private List<Marcacao>		marcacaoList;
 
 	public Usuario()
