@@ -74,6 +74,9 @@ public class Usuario implements Serializable
 	@Temporal(TemporalType.TIME)
 	private Date					saldoInicial;
 
+	@Column(name = "token")
+	private String					token;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
 	//@JsonIgnore
 	private List<Expediente>	expedienteList;
@@ -167,6 +170,16 @@ public class Usuario implements Serializable
 	public void setMarcacaoList(final List<Marcacao> marcacaoList)
 	{
 		this.marcacaoList = marcacaoList;
+	}
+
+	public String getToken()
+	{
+		return token;
+	}
+
+	public void setToken(final String token)
+	{
+		this.token = token;
 	}
 
 	@Override

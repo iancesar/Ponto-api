@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.POST;
@@ -11,12 +12,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import br.com.ponto.api.dao.UsuarioDAO;
 import br.com.ponto.api.model.Usuario;
 
 @Path("/auth")
 @Produces({"application/json"})
 public class AuthenticationRest
 {
+
+	@Inject
+	private UsuarioDAO usuarioDAO;
 
 	@POST
 	public Response authenticateUser(final Usuario usuario)
@@ -42,10 +47,13 @@ public class AuthenticationRest
 		}
 	}
 
-	private void authenticate(final Usuario usuario) throws Exception
+	private void authenticate(Usuario usuario) throws Exception
 	{
-		// Authenticate against a database, LDAP, file or whatever
-		// Throw an Exception if the credentials are invalid
+		usuario = usuarioDAO.login(usuario);
+		if(usuario == null)
+		{
+			throw new Exception("Usuário ou senha inválidos");
+		}
 	}
 
 	private String issueToken(final Usuario usuario)
